@@ -9,9 +9,9 @@ by Jeffery Myers is marked with CC0 1.0. To view a copy of this license, visit h
 
 #include "raylib.h"
 
-#include "resource_dir.h"	// utility header for SearchAndSetResourceDir
+#include "resource_dir.h" // utility header for SearchAndSetResourceDir
 
-int main ()
+int main()
 {
 
 	const int screenWidth = 800;
@@ -28,10 +28,26 @@ int main ()
 
 	// Load a texture from the resources directory
 	Texture wabbit = LoadTexture("wabbit_alpha.png");
-	
+
+	Vector2 ballPosition = {(float)screenWidth / 2, (float)screenHeight / 2};
+
+	SetTargetFPS(60);
+
 	// game loop
-	while (!WindowShouldClose())		// run the loop untill the user presses ESCAPE or presses the Close button on the window
+	while (!WindowShouldClose()) // run the loop untill the user presses ESCAPE or presses the Close button on the window
 	{
+
+		// Update
+
+		if (IsKeyDown(KEY_RIGHT))
+			ballPosition.x += 2.0f;
+		if (IsKeyDown(KEY_LEFT))
+			ballPosition.x -= 2.0f;
+		if (IsKeyDown(KEY_UP))
+			ballPosition.y -= 2.0f;
+		if (IsKeyDown(KEY_DOWN))
+			ballPosition.y += 2.0f;
+
 		// drawing
 		BeginDrawing();
 
@@ -39,11 +55,11 @@ int main ()
 		ClearBackground(BLACK);
 
 		// draw some text using the default font
-		DrawText("Hello Raylib", 200,200,20,WHITE);
+		DrawText("Hello Raylib", 200, 200, 20, WHITE);
 
 		// draw our texture to the screen
-		DrawTexture(wabbit, 400, 200, WHITE);
-		
+		DrawTextureV(wabbit, ballPosition, WHITE);
+
 		// end the frame and get ready for the next one  (display frame, poll input, etc...)
 		EndDrawing();
 	}
